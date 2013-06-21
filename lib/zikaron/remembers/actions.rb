@@ -16,7 +16,7 @@ module Zikaron
       end
 
       def cache
-        yield and return unless Zikaron.redis
+        yield and return unless Zikaron.redis_exists?
         if cached = Zikaron.redis.get(request.url)
           respond_with cached and return 
         end
