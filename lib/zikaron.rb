@@ -1,3 +1,4 @@
+require "redis-namespace"
 require "zikaron/version"
 require "zikaron/remembers/actions"
 
@@ -5,6 +6,10 @@ module Zikaron
 
   class << self
     attr_accessor :config
+  end
+
+  def self.redis
+    @redis ||= Redis::Namespace.new(config.cache_name, :redis => Redis.connect(:url => config.redis_url))
   end
 
   def self.configure(&block)
@@ -20,7 +25,7 @@ module Zikaron
     attr_accessor :redis_url, :memory_duration, :cache_name
 
     def initialize
-      self.redis_url        ||= 'http://localhost:6379/'
+      self.redis_url        ||= 'redis://localhost:6379/'
       self.memory_duration  ||= 60
       self.cache_name       ||= 'zikaron'
     end

@@ -1,26 +1,30 @@
-module Remembers
+module Zikaron
 
-  module Actions
+  module Remembers
 
-    def self.included(base)
-      base.extend ClassMethods
-    end
+    module Actions
 
-    module ClassMethods
-      def remembers(actions=[])
-        actions = [actions].flatten
-        send(:around_filter, :cache, :only => actions)
+      def self.included(base)
+        base.extend ClassMethods
       end
-    end
 
-    def cache
-      yield and return unless redis
-      if cached = redis.get(request.url)
-        respond_with cached and return 
+      module ClassMethods
+        def remembers(actions=[])
+          actions = [actions].flatten
+          send(:around_filter, :cache, :only => actions)
+        end
       end
-      yield
-      redis.set request.url, response.body
-      redis.expireat request.url, (Time.now + 5.seconds).to_i
+
+      def cache
+        yield and return unless Zikaron.redis
+        if cached = Zikaron.redis.get(request.url)
+          respond_with cached and return 
+        end
+        yield
+        Zikaron.redis.set request.url, response.body
+        Zikaron.redis.expireat request.url, (Time.now + Zikaron.config.memory_duration).to_i
+      end
+
     end
 
   end
