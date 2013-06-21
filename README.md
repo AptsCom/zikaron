@@ -18,8 +18,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create config/zikaron.rb:
 
+    Zikaron.configuration do |config|
+      config.redis_url = "http://foo.bar.bat.baz.com/"
+      config.memory_duration = 50 #seconds
+      config.cache_name = :my_application_name
+    end
+
+Then, in your controller:
+
+    class MyController < ApplicationController
+
+      include Zikaron::Remembers::Actions
+
+      remember :show
+
+      def show
+        render :text => @memory.to_s
+      end
+
+    end
+    
 ## Contributing
 
 1. Fork it

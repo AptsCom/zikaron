@@ -1,5 +1,29 @@
 require "zikaron/version"
+require "zikaron/remembers/actions"
 
 module Zikaron
-  # Your code goes here...
+
+  class << self
+    attr_accessor :config
+  end
+
+  def self.configure(&block)
+    @config = Configuration.new
+    yield(config)
+  end
+
+  def self.config
+    @config || Configuration.new
+  end
+
+  class Configuration
+    attr_accessor :redis_url, :memory_duration, :cache_name
+
+    def initialize
+      self.redis_url        ||= 'http://localhost:FOO'
+      self.memory_duration  ||= 60
+      self.cache_name       ||= 'zikaron'
+    end
+  end
+
 end
