@@ -1,6 +1,6 @@
 # Zikaron
 
-TODO: Write a gem description
+Dead simple short-term memory, AKA caching, for Rails applications. Originally designed to cache API responses for performance.
 
 ## Installation
 
