@@ -20,7 +20,7 @@ module Zikaron
     attr_accessor :redis_url, :memory_duration, :cache_name
 
     def initialize
-      self.redis_url        ||= 'http://localhost:FOO'
+      self.redis_url        ||= 'http://localhost:6379/'
       self.memory_duration  ||= 60
       self.cache_name       ||= 'zikaron'
     end
