@@ -20,7 +20,7 @@ Or install it yourself as:
 
 Create config/zikaron.rb:
 
-    Zikaron.configuration do |config|
+    Zikaron.configure do |config|
       config.redis_url = "http://foo.bar.bat.baz.com/"
       config.memory_duration = 50 #seconds
       config.cache_name = :my_application_name
@@ -39,7 +39,7 @@ Then, in your controller:
       end
 
     end
-    
+
 ## Contributing
 
 1. Fork it
