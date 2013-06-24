@@ -10,7 +10,7 @@ module Zikaron
 
   def self.redis_exists?
     begin
-      redis.ping
+      Redis.connect(:url => config.redis_url).ping
     rescue
       false
     end
