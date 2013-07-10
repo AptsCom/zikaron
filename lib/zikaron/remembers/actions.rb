@@ -17,7 +17,7 @@ module Zikaron
 
       def cache
         yield and return unless Zikaron.redis_exists?
-        if cached = Zikaron.redis.get(request.url)
+        if cached = Zikaron.redis.get("actions_#{request.url}")
           respond_with cached and return
         end
         yield
@@ -25,8 +25,8 @@ module Zikaron
       end
 
       def write_to_cache
-        Zikaron.redis.set request.url, response.body
-        Zikaron.redis.expireat request.url, (Time.now + Zikaron.config.memory_duration.to_i).to_i
+        Zikaron.redis.set("actions_#{request.url}", response.body
+        Zikaron.redis.expireat "actions_#{request.url}", (Time.now + Zikaron.config.memory_duration.to_i).to_i
       end
 
     end
