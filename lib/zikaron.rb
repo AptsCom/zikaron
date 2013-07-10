@@ -16,8 +16,13 @@ module Zikaron
     end
   end
 
+  def self.flush_cache
+    return unless redis_exists?
+    redis.del(redis.keys("zikaron*"))
+  end
+
   def self.redis
-    @redis ||= Redis::Namespace.new(config.cache_name, :redis => Redis.connect(:url => config.redis_url))
+    @redis ||= Redis.new
   end
 
   def self.configure(&block)
