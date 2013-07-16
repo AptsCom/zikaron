@@ -18,7 +18,7 @@ module Zikaron
 
   def self.flush_cache
     return unless redis_exists?
-    redis.del(redis.keys("zikaron*"))
+    redis.del(redis.keys("zikaron*")) unless redis.keys("zikaron*").empty?
   end
 
   def self.redis
