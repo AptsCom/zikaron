@@ -1,4 +1,3 @@
-require "redis-namespace"
 require "zikaron/version"
 require "zikaron/remembers/actions"
 
