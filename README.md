@@ -32,7 +32,7 @@ Then, in your controller:
 
       include Zikaron::Remembers::Actions
 
-      remember :show
+      remembers :show
 
       def show
         render :text => @memory.to_s
