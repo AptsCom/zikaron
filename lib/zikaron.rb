@@ -1,3 +1,4 @@
+require "redis/namespace"
 require "zikaron/version"
 require "zikaron/remembers/actions"
 
@@ -21,12 +22,12 @@ module Zikaron
       keys = redis.keys("zikaron*")
       redis.del(keys) unless keys.empty?
     rescue
-      puts "Cache does not exit."
+      puts "Cache does not exist."
     end
   end
 
   def self.redis
-    @redis ||= Redis.new
+    @redis ||= Redis::Namespace.new(config.cache_name, :redis => Redis.connect(:url => config.redis_url))
   end
 
   def self.configure(&block)
